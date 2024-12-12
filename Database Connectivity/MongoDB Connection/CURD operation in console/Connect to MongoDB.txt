@@ -1,0 +1,40 @@
+const mongoose = require('../node_modules/mongoose');
+
+mongoose.connect('mongodb://localhost:27017/cars', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Connection error', err);
+});
+
+
+
+or
+
+
+
+const { MongoClient } = require('../node_modules/mongodb');
+
+const uri = 'mongodb://localhost:27017';
+const client = new MongoClient(uri, {
+ useUnifiedTopology: true,
+ useNewUrlParser: true
+});
+connect();
+
+async function connect() {
+ try {
+ await client.connect();
+ const db = client.db('cars');
+ console.log(
+ `Successfully connected to db ${db.databaseName}`);
+ }
+ catch (err) {
+ console.error(`we encountered ${err}`);
+ }
+ finally {
+ client.close();
+ }
+}

@@ -1,0 +1,63 @@
+const mongoose = require('../node_modules/mongoose');
+
+mongoose.connect('mongodb://localhost:27017/cars')
+  .then(() => {
+    console.log('Connected to MongoDB');
+    
+    const SportsCar = mongoose.model('SportsCars', {company: String, series: String, model: String, status: String});
+    
+    // Update multiple documents
+    SportsCar.updateMany(
+      { 
+        "company": { "$in": ["Mercedes", "Audi"] }
+      },
+      { "$set": { "status": "sold" } }
+    )
+    .then(result => {
+      console.log('Matched count:', result.matchedCount);
+      console.log('Modified count:', result.modifiedCount);
+    })
+    .catch(err => {
+      console.error('Error updating data:', err);
+    });
+  })
+  .catch(err => {
+    console.error('Connection error:', err);
+  });
+
+
+
+
+or
+
+
+
+const { MongoClient } = require('mongodb');
+const uri = 'mongodb://127.0.0.1:27017';
+const client = new MongoClient(uri, {
+ useUnifiedTopology: true,
+ useNewUrlParser: true
+});
+connect();
+async function connect() {
+ try {
+ await client.connect();
+ const db = client.db('cars');
+ const sportsCars = db.collection('SportsCars');
+ //update
+ const cursorUpdate = await sportsCars.updateMany({ "company": { "$in": ["mercedes", "Audi"] } },
+    { "$set": { "status": "sold" } });
+ console.log(cursorUpdate.modifiedCount);
+ 
+ // Display
+ const cursorFind = sportsCars.find();
+ const data = await cursorFind.toArray();
+ console.table(data);
+ }
+ catch (err) {
+ console.error(`we encountered ${err}`);
+ }
+ finally {
+ client.close();
+ }
+}
