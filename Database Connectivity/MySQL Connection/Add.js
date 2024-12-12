@@ -8,7 +8,7 @@ var con = mysql.createConnection({
 host: "localhost", 
 user: "root", 
 password: "", 
-database: "Ashish" 
+database: "ashish" 
 }); 
 app.get('/',function(req,res,next){ 
 res.sendfile('index.html');
