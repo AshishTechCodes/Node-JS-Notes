@@ -1,0 +1,54 @@
+//old method to insert the data.
+const express = require('express');
+const { MongoClient } = require('mongodb'); // Import MongoClient from mongodb package
+const bodyParser = require('body-parser');
+const path = require('path');
+
+const app = express();
+
+// Middleware to parse URL-encoded form data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// MongoDB URI and Database Name
+const uri = 'mongodb://127.0.0.1:27017';
+const dbName = 'formDB';
+
+// MongoClient instance
+let db;
+
+MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(client => {
+    console.log('Connected to Database');
+    db = client.db(dbName); // Store the database connection
+
+    // POST route to handle form submission
+    app.post('/submit', (req, res) => {
+      const { name, email, comments } = req.body;
+
+      // Create a new user document
+      const newUser = { name, email, comments };
+
+      // Insert the new user into the "users" collection
+      db.collection('users').insertOne(newUser)
+        .then(() => {
+          res.redirect('/'); // Redirect to the home page after successful submission
+        })
+        .catch(err => {
+          res.status(500).send('Error submitting form');
+        });
+    });
+
+  })
+  .catch(err => {
+    console.error('Connection error:', err);
+  });
+
+// Serve the insert form
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/insert.html'));
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server is running at http://localhost:3000/');
+});
