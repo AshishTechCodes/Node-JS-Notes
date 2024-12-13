@@ -1,0 +1,99 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Stripe Payment Demo</title>
+    </head>
+    <body>
+        <h3>Welcome to Payment Gateway</h3>
+        <form action="/payment" method="post">
+            <script
+                src="https://checkout.stripe.com/checkout.js"
+                class="stripe-button"
+                data-key="<%= key %>"
+                data-amount="25000"
+                data-currency="inr"
+                data-name="Pranshu Singh"
+                data-description="Handmade Art and Craft Products"
+                data-locale="auto">
+            </script>
+        </form>
+    </body>
+    </html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Stripe Payment Demo</title>
+    <style>
+        #card-element {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        #payment-form button {
+            background-color: #6772e5;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h3>Welcome to Payment Gateway</h3>
+    <form action="/payment" method="post" id="payment-form">
+        <input type="hidden" name="22801048ashish@viva-technology.org" value="22801048ashish@viva-technology.org" />
+
+        <div id="card-element"></div>
+        <div id="card-errors" role="alert"></div>
+
+        <button type="submit">Pay INR 250.00</button>
+    </form>
+
+    <!-- Include Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Initialize Stripe with your publishable key
+        const stripe = Stripe("<%= key %>");
+        const elements = stripe.elements();
+
+        // Create an instance of the card Element
+        const card = elements.create("card", { hidePostalCode: true });
+        card.mount("#card-element");
+
+        // Handle form submission
+        const form = document.getElementById("payment-form");
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            // Disable the submit button to prevent multiple submissions
+            form.querySelector("button").disabled = true;
+
+            // Create a token or display an error
+            const { token, error } = await stripe.createToken(card);
+            if (error) {
+                // Display error message in #card-errors div
+                const errorElement = document.getElementById("card-errors");
+                errorElement.textContent = error.message;
+
+                // Re-enable the submit button if there's an error
+                form.querySelector("button").disabled = false;
+            } else {
+                // Insert the token ID into the form and submit
+                const hiddenInput = document.createElement("input");
+                hiddenInput.setAttribute("type", "hidden");
+                hiddenInput.setAttribute("name", "stripeToken");
+                hiddenInput.setAttribute("value", token.id);
+                form.appendChild(hiddenInput);
+
+                form.submit();
+            }
+        });
+    </script>
+</body>
+</html> -->

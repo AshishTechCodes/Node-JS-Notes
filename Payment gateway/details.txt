@@ -1,0 +1,5 @@
+*Install the following things for this*
+(1) npm install express
+(2) npm install body-parser
+(3) npm install stripe
+(4) npm install ejs

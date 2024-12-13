@@ -1,0 +1,24 @@
+Asset ID:
+Verification Date:
+Verification Name:
+Location:
+Status:
+Comment:
+Verification Method:
+Attachment:
+
+{
+    "id": "PV12345",
+    "assetId": "A123",
+    "verificationDate": "2024-10-21",
+    "verifierName": "John Doe",
+    "location": "Warehouse A",
+    "status": "Passed",
+    "comments": "All checks completed successfully.",
+    "verificationMethod": "Visual Inspection",
+    "timestamp": "2024-10-21T10:30:00Z",
+    "attachments": [
+        "http://example.com/images/verification1.jpg",
+        "http://example.com/documents/report.pdf"
+    ]
+}

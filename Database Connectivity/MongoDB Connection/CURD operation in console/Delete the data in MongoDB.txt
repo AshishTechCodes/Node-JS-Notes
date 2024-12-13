@@ -1,0 +1,57 @@
+const mongoose = require('../node_modules/mongoose');
+
+mongoose.connect('mongodb://localhost:27017/cars')
+  .then(() => {
+    console.log('Connected to MongoDB');
+    
+    const SportsCar = mongoose.model('SportsCars', {company: String, series: String, model: String, status: String});
+    
+    SportsCar.deleteOne({ "series": "A series" })
+      .then(result => {
+        console.log('Deleted count:', result.deletedCount);
+      })
+      .catch(err => {
+        console.error('Error Deleting data:', err);
+      });
+  })
+  .catch(err => {
+    console.error('Connection error:', err);
+  });
+
+
+
+
+or
+
+
+
+
+const { MongoClient } = require('mongodb');
+const uri = 'mongodb://127.0.0.1:27017';
+const client = new MongoClient(uri, {
+ useUnifiedTopology: true,
+ useNewUrlParser: true
+});
+connect();
+async function connect() {
+ try {
+ await client.connect();
+ const db = client.db('cars');
+ const sportsCars = db.collection('SportsCars');
+ //Delete
+ const cursorDelete = await sportsCars
+ .deleteOne({ "status": "A series" });
+ console.log(cursorDelete.deletedCount);
+ 
+ // Display
+ const cursorFind = sportsCars.find();
+ const data = await cursorFind.toArray();
+ console.table(data);
+ }
+ catch (err) {
+ console.error(`we encountered ${err}`);
+ }
+ finally {
+ client.close();
+ }
+}
